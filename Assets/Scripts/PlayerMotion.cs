@@ -12,20 +12,12 @@ public class PlayerMotion : MonoBehaviour
     Transform cameraObject;
     Rigidbody playerRigidBody;
 
-    [Header("Falling")]
-    public float inAirTimer; 
-    public float leapingVelocity;
-    public float fallingVelocity;
-    public LayerMask groundLayer;
-    public float rayCastHeightOffset = 0.5f;
-
-    [Header("Movement Flags")]
-    public bool isGrounded;
-
+    [Header("Float")]
     public float movementSpeed = 1;
     public float sprintingSpeed = 8;
     public float rotationSpeed = 15;
 
+    [Header("Bool")]
     public bool isSprinting;
 
     private void Awake()
@@ -43,27 +35,20 @@ public class PlayerMotion : MonoBehaviour
         moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
-
         if (isSprinting)
         {
             moveDirection = moveDirection * sprintingSpeed;
         }
-
         else
         {
             moveDirection = moveDirection * movementSpeed;
         }
-
-
         Vector3 movementVelocity = moveDirection;
         playerRigidBody.velocity = movementVelocity;
     }
 
     public void HandleAllMovement()
     {
-        HandleFallingAndLanding();
-        if (playerManager.isInteracting)
-            return;
         HandleMovement();
         HandleRotation();
     }
@@ -75,45 +60,10 @@ public class PlayerMotion : MonoBehaviour
         targetDirection = targetDirection + cameraObject.right * inputManager.horizontalInput;
         targetDirection.Normalize();
         targetDirection.y = 0;
-
         if (targetDirection == Vector3.zero)
             targetDirection = transform.forward;
-
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         transform.rotation = playerRotation;
-    }
-
-    private void HandleFallingAndLanding()
-    {
-        RaycastHit hit;
-        Vector3 rayCastOrigin = transform.position;
-        rayCastOrigin.y = rayCastOrigin.y + rayCastHeightOffset;
-
-        if (!isGrounded)
-        {
-            if (!playerManager.isInteracting)
-            {
-                animatorManager.PlayTargetAnimation("Falling", true);
-            }
-
-            inAirTimer = inAirTimer + Time.deltaTime;
-            playerRigidBody.AddForce(transform.forward * leapingVelocity);
-            playerRigidBody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
-        }
-        if (Physics.SphereCast(rayCastOrigin, 0.2f, -Vector3.up, out hit, groundLayer))
-        {
-            if (!isGrounded && !playerManager.isInteracting)
-            {
-                animatorManager.PlayTargetAnimation("Land", true);
-            }
-
-            inAirTimer = 0;
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
     }
 }

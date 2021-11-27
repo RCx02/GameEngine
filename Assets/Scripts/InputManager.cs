@@ -5,20 +5,22 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
-    AnimatorManager animatorManager;
     PlayerMotion playerMotion;
+    AnimatorManager animatorManager;
 
+    [Header("Vector2")]
     public Vector2 movementInput;
     public Vector2 cameraInput;
 
+    [Header("Float")]
     public float cameraInputX;
     public float cameraInputY;
-
     public float moveAmount;
     public float verticalInput;
     public float horizontalInput;
+
+    [Header("Bool")]
     public bool sprintInput;
-    public bool jumpInput;
 
     private void Awake()
     {
@@ -31,12 +33,9 @@ public class InputManager : MonoBehaviour
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
+            Cursor.lockState = CursorLockMode.Locked;
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
-      
-            playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
-            playerControls.PlayerActions.Jump.canceled += i => jumpInput = false;
-
             playerControls.PlayerActions.LeftShift.performed += i => sprintInput = true;
             playerControls.PlayerActions.LeftShift.canceled += i => sprintInput = false;
         }
@@ -53,14 +52,13 @@ public class InputManager : MonoBehaviour
         HandleMovementInput();
         HandleSprintingInput();
     }
+
     private void HandleMovementInput()
     {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
-
         cameraInputX = cameraInput.x;
         cameraInputY = cameraInput.y;
-
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         animatorManager.UpdateAnimatorValues(0, moveAmount, playerMotion.isSprinting);
     }
@@ -74,14 +72,6 @@ public class InputManager : MonoBehaviour
         else
         {
             playerMotion.isSprinting = false;
-        }
-    }
-
-    private void HandleJumpingInput()
-    {
-        if (jumpInput){
-            jumpInput = false;
-            playerMotion.HandleJump();
         }
     }
 }
