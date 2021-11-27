@@ -189,7 +189,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 77b5c408330086e4e915f7b1f4f2420f, type: 2}
+  - {fileID: 2100000, guid: 6b55b29fd77544f47b979a9b47bf0a60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 1
   sprintingSpeed: 8
-  rotationSpeed: 15
+  rotationSpeed: 5
   isSprinting: 0
 --- !u!136 &906848733
 CapsuleCollider:
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -667,7 +667,7 @@ Transform:
   m_Children:
   - {fileID: 2103504767}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1023722257
 MonoBehaviour:
@@ -706,7 +706,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 60d7e2ab2e61c214096adce40cdb38f3, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 60d7e2ab2e61c214096adce40cdb38f3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -811,7 +811,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2103504767}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Camera Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
