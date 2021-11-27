@@ -49,7 +49,6 @@ public class CameraManager : MonoBehaviour
         transform.position = targetPosition;
     }
 
-
     private void RotateCamera()
     {
         lookAngle = lookAngle + (inputManager.cameraInputX * cameraLookSpeed);
