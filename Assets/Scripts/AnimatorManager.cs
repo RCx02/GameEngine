@@ -15,6 +15,11 @@ public class AnimatorManager : MonoBehaviour
         vertical = Animator.StringToHash("Vertical");
     }
 
+    public void PlayTargetAnimation(string targetAnimation, bool isInteracting)
+    {
+        animator.CrossFade(targetAnimation, 0.2f);
+        animator.SetBool("isInteracting", isInteracting);
+    }
     public void UpdateAnimatorValues(float horizontalMovement, float verticalMovement, bool isSprinting)
     {
 
